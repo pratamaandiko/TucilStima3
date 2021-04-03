@@ -1,0 +1,24 @@
+/* navbar color = #88304e */
+body {
+    background-color: #311D3F;
+}
+h1 {
+    text-align: center;
+    color: #e23e57;
+}
+img{
+    width: 50%;
+}
+.textcolor{
+    color: #e23e57;
+}
+.btn {
+    background-color: #a1234d;
+}
+.btn:hover{
+    background-color: #88304e;
+}
+.container {
+    background-color: #522546;
+    width: 70%;
+}
