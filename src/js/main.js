@@ -10,93 +10,96 @@ function handleFiles() {
 
     //menghitung euclidan distance
     function jarak(a,b) {
-      var x = ((a[0] - b[0])**2 + (a[1] - b[1])**2)**0.5;
-      return x.toFixed(2);
-    }
+        var x = ((a[0] - b[0])**2 + (a[1] - b[1])**2)**0.5;
+        return x.toFixed(2);
+      }
 
-    //pengurutan prioritas array dari terkecil
-    function add(arr,x) {
-      arr.push(x);
-      arr.sort(function(a, b){return b[1] - a[1]});
-    }
+      //pengurutan prioritas array dari terkecil
+      function add(arr,x) {
+        arr.push(x);
+        arr.sort(function(a, b){return b[1] - a[1]});
+      }
 
-    // menghitung total jalur yang sudah dilalui, ekuivalen dengan g(n)
-    function countPrev(prev,distance,x) {
-      var total = 0;
-      while(prev[x] != -1) {
-        total = total + distance[x][prev[x]];
-      }
-      return total;
-    }
-    
-    //algoritma A*
-    function astar(awal,akhir,name,matrix,distance) {
-      var t1,t2;
-      var dikunjungi = [];
-      var prio = [];
-      var prev = [];
-      var found = 0;
-      for(var i = 0;i<name.length;i++) {
-        if(awal == name[i]) {
-          t1 = i;
+      // menghitung total jalur yang sudah dilalui, ekuivalen dengan g(n)
+      function countPrev(prev,distance,x) {
+        var total = 0;
+        while(prev[x] != -1) {
+          total = total + distance[x][prev[x]];
+          x = prev[x];
         }
-        if(akhir == name[i]) {
-          t1 = i;
+        return total;
+      }
+      
+      //algoritma A*
+      function astar(awal,akhir,name,matrix,distance) {
+        var t1,t2;
+        var dikunjungi = [];
+        var prio = [];
+        var prev = [];
+        var found = 0;
+        for(var i = 0;i<name.length;i++) {
+          if(awal == name[i]) {
+            t1 = i;
+          }
+          if(akhir == name[i]) {
+            t2 = i;
+          }
         }
-      }
-      for(var i = 0;i<=n;i++) {
-        dikunjungi.push(0);
-      }
-      for(var i = 0;i<=n;i++) {
-        prev.push(-1);
-      }
-      add(prio,[t1,distance[t1,t2]]);
-      while(found == 0 && prio.length != 0) {
-        var simpul = prio.pop();
-        dikunjungi[i] = 1;
-        if(simpul[0] == t2) {
-          found = 1;
+        for(var i = 0;i<name.length;i++) {
+          dikunjungi.push(0);
         }
-        else {
-          for(var i = 0;i<matrix[simpul[0]].length;i++) {
-            if(dikunjungi[i] == 0 && matrix[simpul[0]][i] == 1) {
-              add(prio,[i,distance[i][t2]]);
-              prev[i] = simpul[0];
-              
+        for(var i = 0;i<name.length;i++) {
+          prev.push(-1);
+        }
+        add(prio,[t1,distance[t1,t2]]);
+        while(found == 0 && prio.length != 0) {
+          for(var i = 0;i<prio.length;i++) {
+            prio[i] = prio[i];
+          }
+          var simpul = prio.pop();
+          dikunjungi[i] = 1;
+          if(simpul[0] == t2) {
+            found = 1;
+
+          }
+          else {
+            for(var i = 0;i<matrix[simpul[0]].length;i++) {
+              if(dikunjungi[i] == 0 && matrix[simpul[0]][i] == 1) {
+                prev[i] = simpul[0];
+                var estimate = countPrev(prev,distance,i) + distance[i][t2];
+                add(prio,[i,estimate]);      
+              }
+
             }
-
           }
+          
         }
-        
-      }
-      if(found == 1) {
-        var result = [];
-        var carry = t2;
-        var total_distance = countPrev(prev,distance,t2);
-        while(carry != -1) {
-          result.shift(carry);
-          carry = prev[carry];
-        }
-        if(result.length == 1) {
-          console.log("Lokasi tujuan sama dengan lokasi awal");
-        }
-        else {
-          var answer = ""
-          answer = answer + nama[result[0]];
-          for(var i = 1;i<result.length;i++) {
-            answer = answer + nama[result[i]] +" -> ";
+        if(found == 1) {
+          var result = [];
+          var carry = t2;
+          var total_distance = countPrev(prev,distance,t2);
+          while(carry != -1) {
+            result.push(carry);
+            carry = prev[carry];
           }
-          console.log("Jarak yang ditempuh : " + total_distance + " km");
-          console.log("Titik yang dilewati : ");
-          for(var i = 0;i<result.length;i++) {
+          result.reverse();
+          if(result.length == 1) {
+            console.log("Lokasi tujuan sama dengan lokasi awal");
+          }
+          else {
+            var answer = "Titik yang dilewati : ";
+            answer = answer + name[result[0]];  
+            for(var i = 1;i<result.length;i++) {
+              answer = answer + " -> " + name[result[i]] ;
+            }
+            console.log("Jarak yang ditempuh : " + total_distance + " km");
             console.log(answer);
           }
         }
+        else {
+          console.log("Tujuan tidak bisa dicapai");
+        }
       }
-      else {
-        console.log("Tujuan tidak bisa dicapai");
-      }
-    }
     
     //pemrosesan input file
     const fileList = this.files;
@@ -145,7 +148,7 @@ function handleFiles() {
       }
       for (var i = 0; i<n; i++) {
         for (var j = 0; j<n; j++) {
-          distance[i][j] = jarak(coordinate[i],coordinate[j]);
+          distance[i][j] = Number(jarak(coordinate[i],coordinate[j]));
         }
       }
       console.log(name);
