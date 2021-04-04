@@ -27,6 +27,7 @@
           arr.sort(function(a, b){return b[1] - a[1]});
         }
 
+        // menghitung total jalur yang sudah dilalui, ekuivalen dengan g(n)
         function countPrev(prev,distance,x) {
           var total = 0;
           while(prev[x] != -1) {
@@ -36,7 +37,7 @@
         }
         
         //algoritma A*
-        function astar(awal,akhir,name,matrix,coordinate) {
+        function astar(awal,akhir,name,matrix,distance) {
           var t1,t2;
           var dikunjungi = [];
           var prio = [];
@@ -56,18 +57,51 @@
           for(var i = 0;i<=n;i++) {
             prev.push(-1);
           }
-          add(prio,[t1,jarak(coordinate[t1],coordinate[t2])]);
+          add(prio,[t1,distance[t1,t2]]);
           while(found == 0 && prio.length != 0) {
             var simpul = prio.pop();
-            for(var i = 0;i<matrix[simpul[0]].length;i++) {
-              if(dikunjungi[i] == 0 && matrix[simpul[0]][i] == 1) {
-                dikunjungi[i] = 1;
-                add(prio,[i,jarak(coordinate[i],coordinate[t2])]);
-                prev[i] = simpul[0];
-                
-              }
-
+            dikunjungi[i] = 1;
+            if(simpul[0] == t2) {
+              found = 1;
             }
+            else {
+              for(var i = 0;i<matrix[simpul[0]].length;i++) {
+                if(dikunjungi[i] == 0 && matrix[simpul[0]][i] == 1) {
+                  add(prio,[i,distance[i][t2]]);
+                  prev[i] = simpul[0];
+                  
+                }
+
+              }
+            }
+            
+          }
+          if(found == 1) {
+            var result = [];
+            var carry = t2;
+            var total_distance = countPrev(prev,distance,t2);
+            while(carry != -1) {
+              result.shift(carry);
+              carry = prev[carry];
+            }
+            if(result.length == 1) {
+              console.log("Lokasi tujuan sama dengan lokasi awal");
+            }
+            else {
+              var answer = ""
+              answer = answer + nama[result[0]];
+              for(var i = 1;i<result.length;i++) {
+                answer = answer + nama[result[i]] +" -> ";
+              }
+              console.log("Jarak yang ditempuh : " + total_distance + " km");
+              console.log("Titik yang dilewati : ");
+              for(var i = 0;i<result.length;i++) {
+                console.log(answer);
+              }
+            }
+          }
+          else {
+            console.log("Tujuan tidak bisa dicapai");
           }
         }
         
