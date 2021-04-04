@@ -9,8 +9,10 @@ h1 {
 img{
     width: 50%;
 }
-.textcolor{
+.textstyle{
     color: #e23e57;
+    word-wrap    : break-word;
+    overflow-wrap: break-word;
 }
 .btn {
     background-color: #a1234d;
