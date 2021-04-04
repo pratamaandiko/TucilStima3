@@ -3,6 +3,7 @@ const inputElement = document.getElementById("fileInput");
 let dropDownTitikAwal = document.getElementById("dropDownTitikAwal");
 let dropDownTitikAkhir = document.getElementById("dropDownTitikAkhir");
 let executeButton = document.getElementById("executeButton");
+let outputField = document.getElementById("output");
 
 inputElement.addEventListener("change", handleFiles, false);
 function handleFiles() {
@@ -166,6 +167,26 @@ function handleFiles() {
         dropDownTitikAkhir.appendChild(tempOption);
       }
 
-      
+      //execute button event
+      function execute(){
+        while (outputField.firstChild) {  
+            outputField.removeChild(outputField.firstChild);
+          }
+        let tempOption = document.createElement('p');
+        //lak pingin print deleh kene
+        tempOption.innerHTML = "Titik awal = ";
+        tempOption.innerHTML += dropDownTitikAwal.value;
+        tempOption.innerHTML += ", Titik akhir = ";
+        tempOption.innerHTML += dropDownTitikAkhir.value;
+        outputField.appendChild(tempOption);
+        outputField.append(name);
+        outputField.append(document.createElement("br"));
+        outputField.append(coordinate);
+        outputField.append(document.createElement("br"));
+        outputField.append(matrix);
+        outputField.append(document.createElement("br"));
+        outputField.append(distance);
+      }
+      executeButton.onclick = execute;
     }
   }
