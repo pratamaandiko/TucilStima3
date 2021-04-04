@@ -20,39 +20,42 @@
             <label for="colFormLabelSm" class="align-bottom">Input file</label>
           </div>
           <div class="col-lg-5">
-            <input class="form-control" type="file" id="formFile">
+            <input class="form-control" type="file" id="fileInput">
           </div>  
         </div>
         <br>
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 textcolor">
           <div class="col d-flex align-items-center justify-content-center">
-            <label for="colFormLabelSm" class="align-bottom">Titik awal</label>
+            <label class="align-bottom">Titik awal</label>
           </div>
           <div class="col">
-            <select class="form-select" id="inlineFormSelectPref">
+            <select class="form-select" id="dropDownTitikAwal">
               <option selected>Choose...</option>
-              <option value="1">One</option>
+              <!-- <option value="1">One</option>
               <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="3">Three</option> -->
             </select>
           </div>  
           <div class="col d-flex align-items-center justify-content-center">
-            <label for="colFormLabelSm" class="">Titik akhir</label>
+            <label class="">Titik akhir</label>
           </div>
           <div class="col">
-            <select class="form-select" id="inlineFormSelectPref">
+            <select class="form-select" id="dropDownTitikAkhir">
               <option selected>Choose...</option>
-              <option value="1">One</option>
+              <!-- <option value="1">One</option>
               <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="3">Three</option> -->
             </select>
           </div>
           <div class="row-cols-1 d-flex align-items-center justify-content-center">
-            <button type="button" class="btn">Execute</button>
+            <button type="button" class="btn" id="executeButton">Execute</button>
           </div>
         </div>
-
-        
+        <br>
+        <div id="output" class="textcolor">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minima debitis, placeat error enim ipsa facilis rem ab quae, reprehenderit veritatis expedita provident repellendus voluptatum soluta qui vel laboriosam eius aliquam.
+        </div>
+    <script src="../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
 </html>
