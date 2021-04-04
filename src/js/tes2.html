@@ -60,18 +60,21 @@
           }
           add(prio,[t1,distance[t1,t2]]);
           while(found == 0 && prio.length != 0) {
+            for(var i = 0;i<prio.length;i++) {
+              prio[i] = prio[i];
+            }
             var simpul = prio.pop();
             dikunjungi[i] = 1;
             if(simpul[0] == t2) {
               found = 1;
+
             }
             else {
               for(var i = 0;i<matrix[simpul[0]].length;i++) {
                 if(dikunjungi[i] == 0 && matrix[simpul[0]][i] == 1) {
                   prev[i] = simpul[0];
                   var estimate = countPrev(prev,distance,i) + distance[i][t2];
-                  add(prio,[i,estimate]);
-                  
+                  add(prio,[i,estimate]);      
                 }
 
               }
@@ -87,12 +90,10 @@
               carry = prev[carry];
             }
             result.reverse();
-            console.log(result.length);
             if(result.length == 1) {
               console.log("Lokasi tujuan sama dengan lokasi awal");
             }
             else {
-              console.log(result);
               var answer = "Titik yang dilewati : ";
               answer = answer + name[result[0]];  
               for(var i = 1;i<result.length;i++) {
