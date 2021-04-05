@@ -193,3 +193,18 @@ function handleFiles() {
       executeButton.onclick = execute;
     }
   }
+
+
+  // Keperluan maps
+  var mapOptions = {
+    center: [-6.890542682727725,107.61091659207523],
+    zoom: 16
+ }
+
+ var map = new L.map('mapid', mapOptions);
+
+ var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+ map.addLayer(layer);
+
+ var marker = L.marker([-6.890542682727725,107.61091659207523]).addTo(map);
+ marker.bindPopup('<b>Institut Teknologi Bandung</b><br>Jl. Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132');
