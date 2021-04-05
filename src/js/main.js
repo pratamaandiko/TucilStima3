@@ -179,8 +179,28 @@ function handleFiles() {
         while (outputField.firstChild) {  
             outputField.removeChild(outputField.firstChild);
           }
-        let tempOption = document.createElement('p');
+
+                  //graph
+        let graph = document.createElement('div');
+        graph.id = "mapid";
+        outputField.append(document.createElement("br"));
+        outputField.append(graph);
+        var mapOptions = {
+          center: [-6.890542682727725,107.61091659207523],
+          zoom: 16
+        }
+        var map = new L.map('mapid', mapOptions);
+        var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        map.addLayer(layer);
+
+      
+        // for (const coor of coordinate) {
+        //   var marker = new L.marker([-6.89101501128935, 107.61133038880165]);
+        //   map.addLayer(marker);
+        // }
+
         //lak pingin print deleh kene
+        let tempOption = document.createElement('p');
         tempOption.innerHTML = "Titik awal = ";
         tempOption.innerHTML += dropDownTitikAwal.value;
         tempOption.innerHTML += ", Titik akhir = ";
@@ -193,22 +213,11 @@ function handleFiles() {
         outputField.append(matrix);
         outputField.append(document.createElement("br"));
         outputField.append(distance);
-      }
+
+
+        }
+
       executeButton.onclick = execute;
     }
   }
 
-
-  // Keperluan maps
-  var mapOptions = {
-    center: [-6.890542682727725,107.61091659207523],
-    zoom: 16
- }
-
- var map = new L.map('mapid', mapOptions);
-
- var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
- map.addLayer(layer);
-
- var marker = L.marker([-6.890542682727725,107.61091659207523]).addTo(map);
- marker.bindPopup('<b>Institut Teknologi Bandung</b><br>Jl. Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132');

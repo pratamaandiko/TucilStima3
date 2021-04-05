@@ -20,7 +20,7 @@ var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 // var markers = L.markerClusterGroup();
 
 //tambah mark
-var markers = new Array();
+var markers = [];
 
 function addMark(e) {
   var marker = new L.marker(e.latlng);
@@ -44,5 +44,6 @@ addMarksButton.addEventListener('click', function(){
 clearMarksButton.addEventListener('click',function(){
   for(i=0;i<markers.length;i++) {
     map.removeLayer(markers[i]);
-    }  
+    }
+    markers = [];
 })
