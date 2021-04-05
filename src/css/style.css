@@ -2,9 +2,13 @@
 body {
     background-color: #311D3F;
 }
-h1 {
-    text-align: center;
+h1, h6 {
+    display: inline-block;
     color: #e23e57;
+}
+.h1 {
+    text-align: center;
+
 }
 img{
     width: 50%;
