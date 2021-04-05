@@ -158,7 +158,7 @@ function handleFiles() {
           distance[i][j] = jarak(coordinate[i],coordinate[j]);
         }
       }
-      astar("B","F",name,matrix,distance);
+      astar("A","H",name,matrix,distance);
 
       //mengisi dropdown
       for (const nodess of name) {
