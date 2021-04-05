@@ -105,6 +105,10 @@ function handleFiles() {
           distance[i][j] = Number(getDistanceFromLatLng(coordinate[i][0], coordinate[i][1], coordinate[j][0], coordinate[j][1]));
         }
       }
+      console.log(name);
+      console.log(coordinate);
+      console.log(matrix);
+      console.log(distance);
 
       //mengisi dropdown
       for (const nodess of name) {
