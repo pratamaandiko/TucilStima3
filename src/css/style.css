@@ -29,3 +29,8 @@ img{
     width: 70%;
 }
 #mapid { height: 380px; }
+.text-below-marker {
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+  }

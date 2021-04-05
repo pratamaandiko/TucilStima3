@@ -143,20 +143,68 @@ function handleFiles() {
         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         map.addLayer(layer);
 
-      
-        // for (const coor of coordinate) {
-        //   var marker = new L.marker([-6.89101501128935, 107.61133038880165]);
-        //   map.addLayer(marker);
-        // }
+        let myCustomColour = '#522546';
+        for (let index = 0; index < coordinate.length; index++) {
+          var marker = new L.marker(coordinate[index]);
+          map.addLayer(marker);
+          if (name[index] === dropDownTitikAwal.value) {
+            myCustomColour = '#e23e57';
+          }else if (name[index] === dropDownTitikAkhir.value) {
+            myCustomColour = '#a17f23';
+          }else{
+            myCustomColour = '#522546';
+          }
+
+          const markerHtmlStyles = `
+          background-color: ${myCustomColour};
+          width: 3rem;
+          height: 3rem;
+          display: block;
+          left: -1.5rem;
+          top: -1.5rem;
+          position: relative;
+          border-radius: 3rem 3rem 0;
+          transform: rotate(45deg);
+          border: 1px solid #FFFFFF`
+
+          const markerHtmlStyles2 = `
+          display: block;
+          left: 2.5rem;
+          top: 1.5rem;
+          position: relative;
+          transform: rotate(-45deg);`
+
+          L.marker(coordinate[index], {
+            icon: L.divIcon({
+              className: "my-custom-pin text-below-marker",
+              iconAnchor: [0, 24],
+              labelAnchor: [-6, 0],
+              popupAnchor: [0, -36],
+              html: `<span style="${markerHtmlStyles}"> <span style="${markerHtmlStyles2}"">${name[index]}</span></span>`
+              })
+          }).addTo(map);
+        }
+        for (var i = 0; i<matrix.length; i++) {
+          var polylinePoints = [];
+          for (var j = 0; j<matrix[i].length; j++) {
+            if (matrix[i][j] == 1) {
+              polylinePoints.push(coordinate[i]);
+              polylinePoints.push(coordinate[j]);
+              var polyline = new L.polyline(polylinePoints);
+              map.addLayer(polyline);
+              var polylinePoints = [];
+            }
+          }
+        }
 
         //lak pingin print deleh kene
+        outputField.append(document.createElement("br"));
         let tempOption = document.createElement('p');
         tempOption.innerHTML = "Titik awal = ";
         tempOption.innerHTML += dropDownTitikAwal.value;
         tempOption.innerHTML += ", Titik akhir = ";
         tempOption.innerHTML += dropDownTitikAkhir.value;
         outputField.appendChild(tempOption);
-        outputField.append(document.createElement("br"));
         astar(dropDownTitikAwal.value,dropDownTitikAkhir.value,name,matrix,distance);
         //algoritma A*
         function astar(awal,akhir,name,matrix,distance) {
