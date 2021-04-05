@@ -11,13 +11,22 @@ function handleFiles() {
     //menghitung euclidan distance
     function jarak(a,b) {
         var x = ((a[0] - b[0])**2 + (a[1] - b[1])**2)**0.5;
-        return x.toFixed(2);
+        return Number(x.toFixed(2));
       }
 
       //pengurutan prioritas array dari terkecil
       function add(arr,x) {
         arr.push(x);
-        arr.sort(function(a, b){return b[1] - a[1]});
+        var n = arr.length;
+        for (var i = 0; i < n-1; i++) {
+          for (var j = 0; j < n-i-1; j++) {
+            if (arr[j][1] < arr[j+1][1]) {
+              var temp = arr[j];
+              arr[j] = arr[j+1];
+              arr[j+1] = temp;
+            }
+          }
+        }
       }
 
       // menghitung total jalur yang sudah dilalui, ekuivalen dengan g(n)
@@ -27,7 +36,7 @@ function handleFiles() {
           total = total + distance[x][prev[x]];
           x = prev[x];
         }
-        return total;
+        return Number(total.toFixed(2));
       }
       
       //algoritma A*
@@ -51,13 +60,13 @@ function handleFiles() {
         for(var i = 0;i<name.length;i++) {
           prev.push(-1);
         }
-        add(prio,[t1,distance[t1,t2]]);
+        add(prio,[t1,distance[t1][t2]]);
         while(found == 0 && prio.length != 0) {
           for(var i = 0;i<prio.length;i++) {
             prio[i] = prio[i];
           }
           var simpul = prio.pop();
-          dikunjungi[i] = 1;
+          dikunjungi[simpul[0]] = 1;
           if(simpul[0] == t2) {
             found = 1;
 
@@ -66,10 +75,9 @@ function handleFiles() {
             for(var i = 0;i<matrix[simpul[0]].length;i++) {
               if(dikunjungi[i] == 0 && matrix[simpul[0]][i] == 1) {
                 prev[i] = simpul[0];
-                var estimate = countPrev(prev,distance,i) + distance[i][t2];
-                add(prio,[i,estimate]);      
+                var estimate = Number((countPrev(prev,distance,i) + distance[i][t2]).toFixed(2));
+                add(prio,[i,estimate]);     
               }
-
             }
           }
           
@@ -92,7 +100,7 @@ function handleFiles() {
             for(var i = 1;i<result.length;i++) {
               answer = answer + " -> " + name[result[i]] ;
             }
-            console.log("Jarak yang ditempuh : " + total_distance + " km");
+            console.log("Jarak yang ditempuh : " + total_distance.toFixed(2) + " km");
             console.log(answer);
           }
         }
@@ -112,7 +120,6 @@ function handleFiles() {
       for(var i = 0;i<text1.length;i++) {
         newtext[i] = text1[i].split(" ");
       }
-      console.log(newtext);
 
       var n = Number(text1[0]);
       var name = [];
@@ -148,13 +155,10 @@ function handleFiles() {
       }
       for (var i = 0; i<n; i++) {
         for (var j = 0; j<n; j++) {
-          distance[i][j] = Number(jarak(coordinate[i],coordinate[j]));
+          distance[i][j] = jarak(coordinate[i],coordinate[j]);
         }
       }
-      console.log(name);
-      console.log(coordinate);
-      console.log(matrix);
-      console.log(distance);
+      astar("A","H",name,matrix,distance);
 
       //mengisi dropdown
       for (const nodess of name) {
@@ -193,3 +197,18 @@ function handleFiles() {
       executeButton.onclick = execute;
     }
   }
+
+
+  // Keperluan maps
+  var mapOptions = {
+    center: [-6.890542682727725,107.61091659207523],
+    zoom: 16
+ }
+
+ var map = new L.map('mapid', mapOptions);
+
+ var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+ map.addLayer(layer);
+
+ var marker = L.marker([-6.890542682727725,107.61091659207523]).addTo(map);
+ marker.bindPopup('<b>Institut Teknologi Bandung</b><br>Jl. Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Kota Bandung, Jawa Barat 40132');
