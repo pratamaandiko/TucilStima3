@@ -4,6 +4,7 @@ let dropDownTitikAwal = document.getElementById("dropDownTitikAwal");
 let dropDownTitikAkhir = document.getElementById("dropDownTitikAkhir");
 let executeButton = document.getElementById("executeButton");
 let outputField = document.getElementById("output");
+let keterangan = document.getElementById("keterangan");
 
 inputElement.addEventListener("change", handleFiles, false);
 function handleFiles() {
@@ -133,8 +134,8 @@ function handleFiles() {
                   //graph
         let graph = document.createElement('div');
         graph.id = "mapid";
-        outputField.append(document.createElement("br"));
         outputField.append(graph);
+        keterangan.classList.remove('hide');
         var mapOptions = {
           center: [-6.890542682727725,107.61091659207523],
           zoom: 16
@@ -150,7 +151,7 @@ function handleFiles() {
           if (name[index] === dropDownTitikAwal.value) {
             myCustomColour = '#e23e57';
           }else if (name[index] === dropDownTitikAkhir.value) {
-            myCustomColour = '#a17f23';
+            myCustomColour = '#ffc400';
           }else{
             myCustomColour = '#522546';
           }
@@ -190,7 +191,10 @@ function handleFiles() {
             if (matrix[i][j] == 1) {
               polylinePoints.push(coordinate[i]);
               polylinePoints.push(coordinate[j]);
-              var polyline = new L.polyline(polylinePoints);
+              var polyline = new L.polyline(polylinePoints, {
+                color: '#522546',
+                smoothFactor: 1
+             });
               map.addLayer(polyline);
               var polylinePoints = [];
             }
@@ -264,6 +268,18 @@ function handleFiles() {
               outputField.append(document.createElement("br"));
             }
             else {
+              //mewarna jalur graph terdekat
+              polylinePoints = [];
+              for (let i = 0; i < result.length; i++) {
+                polylinePoints.push(coordinate[result[i]]);
+              }
+              console.log(polylinePoints);
+              var polyline = new L.polyline(polylinePoints, {
+                color: '#46eb34',
+                smoothFactor: 1
+              });
+              map.addLayer(polyline);
+
               var answer = "Titik yang dilewati : ";
               answer = answer + name[result[0]];  
               for(var i = 1;i<result.length;i++) {

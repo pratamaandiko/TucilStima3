@@ -14,7 +14,11 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
-
+    <style>
+      .hide{
+        display: none;
+      }
+    </style>
     <title>Tucil Stima 3</title>
 </head>
 <body>
@@ -35,7 +39,7 @@
         </div>
 
         <br>
-
+        
         <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 textstyle">
           <div class="col d-flex align-items-center justify-content-center">
             <label class="align-bottom">Titik awal</label>
@@ -58,7 +62,11 @@
           </div>
         </div>
         <br>
+        <div class="textstyle hide" id="keterangan">
+          <pre><div class="ketAwal"></div> : titik awal, <div class="ketAkhir"></div> : titik akhir, <div class="jalurterdekat"></div> : jalur terdekat</pre>
+        </div>
         <div id="output" class="textstyle"></div>
+
         
     </div>
         
