@@ -9,27 +9,22 @@ let keterangan = document.getElementById("keterangan");
 inputElement.addEventListener("change", handleFiles, false);
 function handleFiles() {
 
-    //menghitung euclidan distance
-      // function jarak(a,b) {
-      //   var x = ((a[0] - b[0])**2 + (a[1] - b[1])**2)**0.5;
-      //   return Number(x.toFixed(2));
-      // }
-      function getDistanceFromLatLng(lat1, lng1, lat2, lng2, miles) { // miles optional
+      function getDistanceFromLatLng(lat1, lng1, lat2, lng2, miles) { // miles opsional
         if (typeof miles === "undefined"){miles=false;}
         function deg2rad(deg){return deg * (Math.PI/180);}
         function square(x){return Math.pow(x, 2);}
-        var r=6371; // radius of the earth in km
+        var r=6371; // radius bumi dalam satuan km
         lat1=deg2rad(lat1);
         lat2=deg2rad(lat2);
         var lat_dif=lat2-lat1;
         var lng_dif=deg2rad(lng2-lng1);
         var a=square(Math.sin(lat_dif/2))+Math.cos(lat1)*Math.cos(lat2)*square(Math.sin(lng_dif/2));
         var d=2*r*Math.asin(Math.sqrt(a));
-        if (miles){return d * 0.621371;} //return miles
-        else{return d;} //return km
+        if (miles){return d * 0.621371;} //return dalam satuan miles
+        else{return d;} //return dala satuan km
       }
 
-      //pengurutan prioritas array dari terkecil
+      //pengurutan prioritas array dari f(n) terkecil
       function add(arr,x) {
         arr.push(x);
         var n = arr.length;
@@ -102,14 +97,9 @@ function handleFiles() {
       }
       for (var i = 0; i<n; i++) {
         for (var j = 0; j<n; j++) {
-          //distance[i][j] = jarak(coordinate[i],coordinate[j]);
           distance[i][j] = Number(getDistanceFromLatLng(coordinate[i][0], coordinate[i][1], coordinate[j][0], coordinate[j][1]));
         }
       }
-      console.log(name);
-      console.log(coordinate);
-      console.log(matrix);
-      console.log(distance);
 
       //mengisi dropdown
       for (const nodess of name) {
