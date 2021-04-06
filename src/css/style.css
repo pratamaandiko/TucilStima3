@@ -33,6 +33,11 @@ img{
     font-size: 25px;
     font-weight: bold;
     color: black;
+    display: block;
+    left: 2.5rem;
+    top: 1.5rem;
+    position: relative;
+    transform: rotate(-45deg);
   }
 .ketAwal{
     width: 40px;
@@ -51,4 +56,23 @@ img{
     height: 15px;
     display: inline-block;
     background-color: #46eb34;
+}
+.hide{
+    display: none;
+  }
+
+.tampilanmark1{
+    background-color: #522546;
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    left: -1.4rem;
+    top: -2.0rem;
+    position: relative;
+    border-radius: 3rem 3rem 0;
+    transform: rotate(45deg);
+    border: 1px solid #FFFFFF`
+}
+.markDipilih{
+    background-color: #e23e57;
 }
