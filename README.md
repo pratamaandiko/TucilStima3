@@ -12,7 +12,8 @@ Program yang akan menentukan lintasan terpendek dari suatu graf dengan API MAPS
     <img src="https://user-images.githubusercontent.com/63132659/113736922-bae4af00-9727-11eb-9b89-71eb18365713.jpg" width="500"><br />
     <img src="https://user-images.githubusercontent.com/63132659/113736949-c0da9000-9727-11eb-9229-abbe666d0b50.jpg" width="500"><br />
     <img src="https://user-images.githubusercontent.com/63132659/113736972-c8019e00-9727-11eb-8693-81422cadd548.jpg" width="500"><br />
-
+## Requirements
+  * Browser Google Chrome
 ## Cara menggunakan
 1. Dowload repositori ini terlebih dahulu, lalu ekstrak
 2. Masuk ke direktori src/html
