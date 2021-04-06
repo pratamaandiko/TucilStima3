@@ -125,13 +125,9 @@ function handleFiles() {
         dropDownTitikAkhir.appendChild(tempOption);
       }
 
-      //execute button event
-      function execute(){
-        while (outputField.firstChild) {  
-            outputField.removeChild(outputField.firstChild);
-          }
-
-                  //graph
+      var polylinePoints = [];
+      function initMap() {
+        //graph
         let graph = document.createElement('div');
         graph.id = "mapid";
         outputField.append(graph);
@@ -140,7 +136,7 @@ function handleFiles() {
           center: coordinate[0],
           zoom: 16
         }
-        var map = new L.map('mapid', mapOptions);
+        globalThis.map = new L.map('mapid', mapOptions);
         var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         map.addLayer(layer);
 
@@ -186,7 +182,7 @@ function handleFiles() {
           }).addTo(map);
         }
         for (var i = 0; i<matrix.length; i++) {
-          var polylinePoints = [];
+          polylinePoints = [];
           for (var j = 0; j<matrix[i].length; j++) {
             if (matrix[i][j] == 1) {
               polylinePoints.push(coordinate[i]);
@@ -194,14 +190,24 @@ function handleFiles() {
               var polyline = new L.polyline(polylinePoints, {
                 color: '#522546',
                 smoothFactor: 1
-             });
+              });
               map.addLayer(polyline);
-              var polylinePoints = [];
+              polylinePoints = [];
             }
           }
         }
+      }
 
-        //lak pingin print deleh kene
+      initMap();
+      //execute button event
+      function execute(){
+        while (outputField.firstChild) {  
+            outputField.removeChild(outputField.firstChild);
+          }
+
+        initMap();
+      
+
         outputField.append(document.createElement("br"));
         let tempOption = document.createElement('p');
         tempOption.innerHTML = "Titik awal = ";
@@ -273,7 +279,6 @@ function handleFiles() {
               for (let i = 0; i < result.length; i++) {
                 polylinePoints.push(coordinate[result[i]]);
               }
-              console.log(polylinePoints);
               var polyline = new L.polyline(polylinePoints, {
                 color: '#46eb34',
                 smoothFactor: 1
