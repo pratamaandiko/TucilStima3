@@ -137,7 +137,7 @@ function handleFiles() {
         outputField.append(graph);
         keterangan.classList.remove('hide');
         var mapOptions = {
-          center: [-6.890542682727725,107.61091659207523],
+          center: coordinate[0],
           zoom: 16
         }
         var map = new L.map('mapid', mapOptions);
