@@ -3,6 +3,8 @@ let addMarksButton = document.getElementById("addMarksButton");
 let clearMarksButton = document.getElementById("clearMarksButton");
 let connectMarksButton1 = document.getElementById("connectMarksButton1");
 let connectMarksButton2 = document.getElementById("connectMarksButton2");
+let legendAddMark = document.getElementById("legendAddMark");
+let legendConnectMark = document.getElementById("legendConnectMark");
 let markobjects = document.querySelectorAll(".mark");
 
   // Keperluan maps
@@ -23,6 +25,7 @@ var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 
 //tambah mark
 var markers = [];
+var lines = [];
 
 function addMark(e) {
 
@@ -45,10 +48,12 @@ function addMark(e) {
 addMarksButton.addEventListener('click', function(){
   if (addMarksButton.innerHTML === "Tambah mark") {
     connectMarksButton1.classList.add('hide');
+    legendAddMark.classList.remove('hide');
     map.addEventListener('click',addMark);
     addMarksButton.innerHTML = "Selesai";
   }else{
     connectMarksButton1.classList.remove('hide');
+    legendAddMark.classList.add('hide');
     map.removeEventListener('click',addMark);
     addMarksButton.innerHTML = "Tambah mark";
   }
@@ -60,41 +65,51 @@ clearMarksButton.addEventListener('click',function(){
   for(i=0;i<markers.length;i++) {
     map.removeLayer(markers[i]);
     }
+  for (let i = 0; i < lines.length; i++) {
+    map.removeLayer(lines[i]);
+  }  
     markers = [];
+    lines = [];
 })
+var polylinePoints = [];
+function tandaiMark(e) {
+  e.originalEvent.target.classList.toggle('markDipilih');
+  polylinePoints.push([e.latlng.lat,e.latlng.lng]);
+}
 
+function connectMark() {
+  if (polylinePoints.length != 0) {
+        
+  }
+  var polyline = new L.polyline(polylinePoints, {
+    color: '#522546',
+    smoothFactor: 1
+  });
+
+  for(let i=0;i<markers.length;i++) {
+    markers[i]._icon.firstChild.classList.remove('markDipilih');
+    }
+  map.addLayer(polyline);
+  polylinePoints = [];
+  lines.push(polyline);  
+}
 connectMarksButton1.addEventListener('click', function(){
-  var polylinePoints = [];
   if (connectMarksButton1.innerHTML === "Hubungkan mark") {
     addMarksButton.classList.add('hide');
     clearMarksButton.classList.add('hide');
+    legendConnectMark.classList.remove('hide');
     connectMarksButton2.classList.remove('hide');
     connectMarksButton1.innerHTML = "Selesai";
-    map.addEventListener('click',function (e) {
-      console.log(e);
-      e.originalEvent.target.classList.toggle('markDipilih');
-      polylinePoints.push([e.latlng.lat,e.latlng.lng]);
-    })
-    connectMarksButton2.addEventListener('click', function() {
-      console.log(polylinePoints);
-      if (polylinePoints.length != 0) {
-        
-      }
-      var polyline = new L.polyline(polylinePoints, {
-        color: '#522546',
-        smoothFactor: 1
-      });
-      map.addLayer(polyline);
-      polylinePoints = [];     
-      })
+    map.addEventListener('click',tandaiMark);
+    connectMarksButton2.addEventListener('click', connectMark);
   }else{
-    
+    map.removeEventListener('click',tandaiMark);
+    connectMarksButton2.removeEventListener('click', connectMark);
     addMarksButton.classList.remove('hide');
     clearMarksButton.classList.remove('hide');
     connectMarksButton2.classList.add('hide');
+    legendConnectMark.classList.add('hide');
     connectMarksButton1.innerHTML = "Hubungkan mark";
   }
   
 })
-
-// document.querySelector("#mapid > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-marker-pane > div:nth-child(2) > span")
