@@ -1,7 +1,9 @@
 let outputField = document.getElementById("output");
 let addMarksButton = document.getElementById("addMarksButton");
 let clearMarksButton = document.getElementById("clearMarksButton");
-
+let connectMarksButton1 = document.getElementById("connectMarksButton1");
+let connectMarksButton2 = document.getElementById("connectMarksButton2");
+let markobjects = document.querySelectorAll(".mark");
 
   // Keperluan maps
 
@@ -23,17 +25,30 @@ var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
 var markers = [];
 
 function addMark(e) {
-  var marker = new L.marker(e.latlng);
+
+
+  var marker = new L.marker(e.latlng, {
+    icon: L.divIcon({
+      className: "my-custom-pin",
+      iconAnchor: [0, 24],
+      labelAnchor: [-6, 0],
+      popupAnchor: [0, -36],
+      html: `<span class="mark tampilanmark1"> <span class="text-below-marker">${markers.length + 1}</span></span>`
+      })
+  });
       map.addLayer(marker);
       markers.push(marker);
+      markobjects = document.querySelectorAll(".mark");
 }
 
 //menambah mark
 addMarksButton.addEventListener('click', function(){
   if (addMarksButton.innerHTML === "Tambah mark") {
+    connectMarksButton1.classList.add('hide');
     map.addEventListener('click',addMark);
     addMarksButton.innerHTML = "Selesai";
   }else{
+    connectMarksButton1.classList.remove('hide');
     map.removeEventListener('click',addMark);
     addMarksButton.innerHTML = "Tambah mark";
   }
@@ -47,3 +62,39 @@ clearMarksButton.addEventListener('click',function(){
     }
     markers = [];
 })
+
+connectMarksButton1.addEventListener('click', function(){
+  var polylinePoints = [];
+  if (connectMarksButton1.innerHTML === "Hubungkan mark") {
+    addMarksButton.classList.add('hide');
+    clearMarksButton.classList.add('hide');
+    connectMarksButton2.classList.remove('hide');
+    connectMarksButton1.innerHTML = "Selesai";
+    map.addEventListener('click',function (e) {
+      console.log(e);
+      e.originalEvent.target.classList.toggle('markDipilih');
+      polylinePoints.push([e.latlng.lat,e.latlng.lng]);
+    })
+    connectMarksButton2.addEventListener('click', function() {
+      console.log(polylinePoints);
+      if (polylinePoints.length != 0) {
+        
+      }
+      var polyline = new L.polyline(polylinePoints, {
+        color: '#522546',
+        smoothFactor: 1
+      });
+      map.addLayer(polyline);
+      polylinePoints = [];     
+      })
+  }else{
+    
+    addMarksButton.classList.remove('hide');
+    clearMarksButton.classList.remove('hide');
+    connectMarksButton2.classList.add('hide');
+    connectMarksButton1.innerHTML = "Hubungkan mark";
+  }
+  
+})
+
+// document.querySelector("#mapid > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-marker-pane > div:nth-child(2) > span")
